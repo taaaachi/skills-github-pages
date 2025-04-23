@@ -1,3 +1,775 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Дамское Счастье</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Jost:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --primary: #d4a373;
+      --primary-dark: #c08a5d;
+      --secondary: #fefae0;
+      --light: #faf6f2;
+      --dark: #333333;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      scroll-behavior: smooth;
+    }
+
+    .title-font {
+      font-family: 'Lobster', cursive;
+      
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://i.yapx.ru/YuzMY.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;/ min-height: 100vh;
+    }
+
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover:after {
+      width: 100%;
+    }
+
+    .category-card {
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transform: translateY(0);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .category-card .category-image {
+      transition: transform 0.5s ease;
+    }
+
+    .category-card:hover .category-image {
+      transform: scale(1.05);
+    }
+    
+    .footer-links a {
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .newsletter-input {
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-input:focus {
+      box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.3);
+    }
+
+    .team-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .team-modal-content {
+      font-family: 'Jost';
+      background-color: #FFF3FB;
+      margin: 5% auto;
+      padding: 30px;
+      width: 90%;
+      max-width: 1000px;
+      border-radius: 15px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .team-modal-header h2,
+    h3 {
+      text-align: center;
+      font-family: 'Lobster', cursive;
+      font-size: 2.5rem;
+      color: #000;
+      margin-bottom: 10px;
+    }
+
+   .team-members-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .team-members-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+    team-modal-content {
+  width: 95%; 
+  margin: 2% auto; 
+  padding: 20px; 
+  max-height: 90vh; 
+}
+
+@media (min-width: 768px) {
+  .team-modal-content {
+    width: 90%;
+    margin: 5% auto;
+    padding: 30px;
+    max-width: 1000px;
+  }
+}
+
+    .team-member-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .team-member-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .team-photo-container {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #FFE0F5;
+    }
+
+    .team-member-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .team-member-name {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: #FF43E6;
+    }
+
+    .team-member-position {
+      color: #000;
+      font-weight: 500;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-400 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-500 {
+      animation-delay: 0.5s;
+    }
+
+    .scroll-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      z-index: 99;
+    }
+
+    .scroll-top.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-top:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .team-member {
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-5px);
+    }
+
+    .team-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 10px;
+      border: 3px solid var(--primary);
+    }
+
+    .team-link,
+    .documents-link {
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .team-link:hover,
+    .documents-link:hover {
+      text-decoration: underline;
+      color: var(--primary-dark);
+    }
+
+    .documents-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .documents-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .documents-list li:last-child {
+      border-bottom: none;
+    }
+
+    .documents-list a {
+      color: var(--dark);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .documents-list a:hover {
+      color: var(--primary);
+      padding-left: 10px;
+    }
+    
+    @media (max-width: 767px) {
+  #cookie-banner {
+    padding: 12px 8px; 
+  }
+  
+  #cookie-banner h2 {
+    font-size: 1.5rem !important; 
+    margin-bottom: 8px !important;
+  }
+  
+  #cookie-banner .max-w-lg {
+    max-width: 90% !important; 
+  }
+}
+    
+    /* Стили для водяной марки */
+.hero-watermark {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.hero-watermark:hover {
+  opacity: 1;
+}
+
+.hero-watermark .title-font {
+  font-size: 1.5rem; /* Размер по умолчанию для мобильных */
+  line-height: 1.2;
+}
+
+/* Для планшетов */
+@media (min-width: 640px) {
+  .hero-watermark .title-font {
+    font-size: 1.75rem;
+  }
+}
+
+/* Для десктопов */
+@media (min-width: 1024px) {
+  .hero-watermark .title-font {
+    font-size: 2rem;
+  }
+}
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Герой -->
+  <section class="hero text-white py-32 px-4 text-center flex items-center justify-center min-h-screen relative">
+    
+   <a href="/" class="hero-watermark">
+  <div class="flex items-center">
+    <i class="fas fa-book-open text-xl md:text-2xl book-icon mr-2"></i>
+    <h1 class="title-font font-bold">Дамское<br>Счастье</h1>
+  </div>
+</a>
+
+    <div class="max-w-4xl mx-auto animate-fade-in">
+      <h2 class="title-font text-4xl md:text-6xl font-bold mb-6 leading-tight">Дамское Счастье</h2>
+
+      <a href="#content" class="inline-block mt-12">
+        <div class="w-16 h-16 rounded-full bg-[#FFF3FB] bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition-all duration-300 z-10">
+          <i class="fas fa-chevron-down text-2xl"></i>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section id="content" class="bg-[#FFF3FB] py-16">
+    <div class="container mx-auto flex justify-center">
+      <div class="flex flex-col md:flex-row items-center gap-20 px-4 max-w-6xl">
+        <div class="flex-shrink-0 order-1 md:order-none py-6 md:py-0">
+          <img src="https://i124.fastpic.org/big/2025/0406/43/bcf9ddc7d1ac29ccc716a8ba6587a143.jpg" alt="Интерьер Дамского Счастья" class="w-full max-w-sm rounded-lg shadow-lg">
+        </div>
+
+        <div class="text-xl md:max-w-lg text-center md:text-left order-2 md:order-none">
+          Хотели когда-нибудь попасть в место, где найдётся всё, что интересно именно вам? Прочитать рецензию на любимую дораму или книгу, подобрать стильный образ для любого события или даже заглянуть в будущее с помощью гадания? Помните магазин Октава Муре из произведения Эмиля Золя «Дамское счастье»? И здесь каждая женщина найдёт что-то своё — уют, вдохновение и единомышленниц. Оставайтесь с нами, ведь «Дамское счастье» — это место, где рождаются мечты!
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Категории -->
+  <section class="bg-[#FFE0F5] py-16 px-4">
+    <div class="container mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Мода -->
+        <div id="fashion" class="category-card bg-white rounded-lg overflow-hidden shadow-md animate-fade-in delay-100">
+          <div class="h-48 bg-cover bg-center category-image" style="background-image: url('https://i124.fastpic.org/big/2025/0406/23/d4a0940069c9f76f288cf2c9ee895e23.jpg');"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-tshirt text-xl text-[#d4a373] mr-2"></i>
+              <h3 class="title-font text-xl font-bold">Новейшие наряды господина Муре</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Мир моды, где каждый наряд — это история, а каждый аксессуар — штрих к вашему образу! Вас ждут подборки одежды на любой случай и советы по стилю</p>
+            <a href="#" class="inline-flex items-center text-[#d4a373] font-semibold hover:underline group">
+              Исследовать
+              <i class="fas fa-chevron-right ml-2 text-sm transition-transform group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Дорамы -->
+        <div id="dramas" class="category-card bg-white rounded-lg overflow-hidden shadow-md animate-fade-in delay-200">
+          <div class="h-48 bg-cover bg-center category-image" style="background-image: url('https://i124.fastpic.org/big/2025/0406/02/25a77e19e495f336e733bf47997cfc02.jpg');"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-film text-xl text-[#d4a373] mr-2"></i>
+              <h3 class="title-font text-xl font-bold">Кинопоказ для дорогих и прекрасных</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Здесь вас ждут новости о премьерах и любимых актёрах, обзоры новых и культовых сериалов, а также эксклюзивные материалы о съёмочном процессе и закулисных историях
+            </p>
+            <a href="#" class="inline-flex items-center text-[#d4a373] font-semibold hover:underline group">
+              Исследовать
+              <i class="fas fa-chevron-right ml-2 text-sm transition-transform group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Книги -->
+        <div id="books" class="category-card bg-white rounded-lg overflow-hidden shadow-md animate-fade-in delay-300">
+          <div class="h-48 bg-cover bg-center category-image" style="background-image: url('https://i124.fastpic.org/big/2025/0406/70/2cd5fea9deaae4f03cdddd5a233b6c70.jpg');"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-book text-xl text-[#d4a373] mr-2"></i>
+              <h3 class="title-font text-xl font-bold">Новая романистика</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Отдел литературы, где каждая книга — это история, способная затронуть струны души! Здесь вы найдёте обзоры и рецензии на лучшие любовные романы, а также тематические подборки на любой вкус</p>
+            <a href="#" class="inline-flex items-center text-[#d4a373] font-semibold hover:underline group">
+              Исследовать
+              <i class="fas fa-chevron-right ml-2 text-sm transition-transform group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Кулинария -->
+        <div id="cooking" class="category-card bg-white rounded-lg overflow-hidden shadow-md animate-fade-in delay-400">
+          <div class="h-48 bg-cover bg-center category-image" style="background-image: url('https://i124.fastpic.org/big/2025/0406/fd/cbf8453ed5858ad13ffaefb3f054e0fd.jpg');"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-utensils text-xl text-[#d4a373] mr-2"></i>
+              <h3 class="title-font text-xl font-bold">Кулинарная книга</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Царство вкусов и ароматов! Здесь собраны проверенные рецепты на каждый день — от быстрых завтраков до праздничных ужинов, от бабушкиных пирогов до авторских кулинарных экспериментов</p>
+            <a href="#" class="inline-flex items-center text-[#d4a373] font-semibold hover:underline group">
+              Исследовать
+              <i class="fas fa-chevron-right ml-2 text-sm transition-transform group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Эзотерика -->
+        <div id="esoteric" class="category-card bg-white rounded-lg overflow-hidden shadow-md animate-fade-in delay-500">
+          <div class="h-48 bg-cover bg-center category-image" style="background-image: url('https://i124.fastpic.org/big/2025/0406/58/240399c75e42258fb054e61e6ab47258.jpg');"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-moon text-xl text-[#d4a373] mr-2"></i>
+              <h3 class="title-font text-xl font-bold">Карты судьбы</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Погрузитесь в мир гадания с нашим гидом по Таро! Здесь вы найдёте подробные инструкции по толкованию карт, проверенные расклады на любые ситуации и секреты работы с разными колодами</p>
+            <a href="#" class="inline-flex items-center text-[#d4a373] font-semibold hover:underline group">
+              Исследовать
+              <i class="fas fa-chevron-right ml-2 text-sm transition-transform group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+  </section>
+
+  <!-- Файлы куки -->
+  <section id="cookie-banner" class="py-4 px-2 bg-white bg-opacity-50 backdrop-blur-sm fixed bottom-0 left-0 right-0 z-50">
+    <div class="max-w-lg mx-auto text-center cursor-pointer group" onclick="openCookiePolicy()">
+      <h2 class="title-font text-3xl font-bold mb-4 text-gray-800 group-hover:text-[#d4a373] transition-colors duration-300">
+        Политика использования файлов cookie
+    </div>
+  </section>
+
+  <!-- Модальное окно политики cookies -->
+  <div id="cookie-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+
+    <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-8">
+        <div class="flex justify-between items-start mb-6">
+          <h3 class="title-font text-3xl font-bold">Политика использования файлов cookie</h3>
+          <button onclick="closeCookieModal()" class="text-gray-500 hover:text-gray-700 text-2xl">
+            &times;
+          </button>
+        </div>
+
+        <div class="prose max-w-none">
+          <!-- Здесь содержимое вашей политики -->
+          <p>Этот сайт использует файлы cookie для улучшения работы...</p>
+          <!-- Добавьте остальной текст политики -->
+        </div>
+
+        <div class="mt-8 flex justify-center">
+          <button onclick="closeCookieModal()" class="bg-[#d4a373] hover:bg-[#c08a5d] text-white font-bold py-2 px-6 rounded transition duration-300">
+            Я поняла
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно нашей команды -->
+  <div id="team-modal" class="team-modal">
+    <div class="team-modal-content">
+      <span class="close-modal" onclick="closeTeamModal()">&times;</span>
+
+      <div class="team-modal-header">
+        <h2 class="title-font">Наша команда</h2>
+      </div>
+
+      <div class="team-members-container">
+        <!-- Член команды 1 -->
+        <div class="team-member-card">
+          <div class="team-photo-container">
+            <img src="https://sun7-18.userapi.com/impg/RVFznCHd95ekwd0cCeuGGPWMVWvHbA27IFX-jA/9BafQc7OFKg.jpg?size=912x912&quality=95&sign=60667f834ae09f7417731f7ae5763031&type=album" alt="Диана Сушенкова" class="team-member-photo">
+          </div>
+          <h3 class="team-member-name">Диана Сушенкова</h3>
+          <p class="team-member-position">куратор проекта</p>
+        </div>
+
+        <!-- Член команды 2 -->
+        <div class="team-member-card">
+          <div class="team-photo-container">
+            <img src="https://sun9-35.userapi.com/impg/_NUXvkpFAZTCiwgr8HIhrKOCHIrRoaKVo4tfuQ/z-Se4ZkWD5s.jpg?size=853x1280&quality=95&sign=52ac4127275daeaa24450731813f89da&type=album" alt="Татьяна Селиверстова" class="team-member-photo">
+          </div>
+          <h3 class="team-member-name">Татьяна Селиверстова</h3>
+          <p class="team-member-position">менеджер, разработчик</p>
+
+        </div>
+
+        <!-- Член команды 3 -->
+        <div class="team-member-card">
+          <div class="team-photo-container">
+            <img src="https://sun9-62.userapi.com/impg/gwsKaEGd0kj79mcHLndchqNjdysE4W3unjvoGw/6perf9e78gc.jpg?size=1620x2160&quality=95&sign=09a59f39892f8fd39526b89b6091bd08&type=album" alt="Надежда Молокова" class="team-member-photo">
+          </div>
+          <h3 class="team-member-name">Надежда Молокова</h3>
+          <p class="team-member-position">дизайнер</p>
+
+        </div>
+
+        <!-- Член команды 4 -->
+        <div class="team-member-card">
+          <div class="team-photo-container">
+            <img src="https://sun9-2.userapi.com/impg/YQ3cfl4xb1EyZ6sc7mgXrssxVZbmme3dV6TRpA/WKuezKwhglg.jpg?size=853x1280&quality=95&sign=3997d4a9fdb30a2a4f5199d576f63325&type=album" alt="Ульяна Паламарчук" class="team-member-photo">
+          </div>
+          <h3 class="team-member-name">Ульяна Паламарчук</h3>
+          <p class="team-member-position">копирайтер</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Футер -->
+  <footer class="bg-black text-white py-12 px-4">
+    <div class="container mx-auto">
+      <div class="flex flex-wrap justify-between gap-8">
+        <!-- Колонка "Обратная связь" -->
+        <div class="flex-1 min-w-[200px]">
+          <h4 class="title-font font-bold mb-4 text-lg text-center md:text-center">Обратная связь</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li class="flex items-center justify-center md:text-center">
+              <i class="fas fa-comment-alt mr-3"></i>
+              <a href="#" class="hover:text-white">Присоединяйтесь к обсуждению</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Колонка "Контакты" -->
+        <div class="flex-1 min-w-[200px]">
+          <h4 class="title-font font-bold mb-4 text-lg text-center md:text-center">Контакты</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li class="flex items-center justify-center md:text-center">
+              <i class="fas fa-phone mr-3"></i>
+              <span>+7 (800) 555-35-35</span>
+            </li>
+            <li class="flex items-center justify-center md:text-center">
+              <i class="fas fa-envelope mr-3"></i>
+              <span>the.ladies.paradise_official@gmail.com</span>
+            </li>
+            <li class="flex items-center justify-center md:text-center">
+              <i class="fas fa-clock mr-3"></i>
+              <span>Пн-Пт: 10:00 - 18:00</span>
+            </li>
+            <li class="flex items-center justify-center md:text-center">
+              <i class="fas fa-users mr-3 text-gray-400"></i>
+              <span onclick="openTeamModal()" class="cursor-pointer text-gray-400 hover:text-white transition-colors duration-300">Наша команда</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Колонка "Документы" -->
+        <div class="flex-1 min-w-[200px]">
+          <h4 class="title-font font-bold mb-4 text-lg text-center md:text-center">Документы</h4>
+          <ul class="space-y-2">
+            <li class="flex items-center justify-center md:text-center">
+              <a href="#" class="text-gray-400 hover:text-white flex items-center" onclick="event.preventDefault(); document.getElementById('documents-link').click();">
+                <i class="fas fa-chevron-right text-xs mr-2"></i>
+                <span>Правила сайта</span>
+              </a>
+            </li>
+            <li class="flex items-center justify-center md:text-center">
+              <a href="#" class="text-gray-400 hover:text-white flex items-center whitespace-nowrap" onclick="event.preventDefault(); document.getElementById('documents-link').click();">
+                <i class="fas fa-chevron-right text-xs mr-2"></i>
+                <span>Согласие на обработку данных</span>
+              </a>
+            </li>
+            <li class="flex items-center justify-center md:text-center">
+              <a href="#" class="text-gray-400 hover:text-white flex items-center" onclick="event.preventDefault(); document.getElementById('documents-link').click();">
+                <i class="fas fa-chevron-right text-xs mr-2"></i>
+                <span>Лицензионное соглашение</span>
+              </a>
+            </li>
+            <li class="flex items-center justify-center md:text-center">
+              <a href="#" class="text-gray-400 hover:text-white flex items-center" onclick="event.preventDefault(); document.getElementById('documents-link').click();">
+                <i class="fas fa-chevron-right text-xs mr-2"></i>
+                <span>Пользовательское соглашение</span>
+              </a>
+            </li>
+            <li class="flex items-center justify-center md:text-center">
+              <a href="#" class="text-gray-400 hover:text-white flex items-center" onclick="event.preventDefault(); document.getElementById('documents-link').click();">
+                <i class="fas fa-chevron-right text-xs mr-2"></i>
+                <span>Политика конфиденциальности</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <p>© 2025 Дамское Счастье. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+  if (!localStorage.getItem('cookiesAccepted')) {
+    document.getElementById('cookie-banner').style.display = 'block';
+  }
+});
+
+function openCookiePolicy() {
+  document.getElementById('cookie-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCookieModal() {
+  document.getElementById('cookie-modal').classList.add('hidden');
+  document.body.style.overflow = 'auto';
+  localStorage.setItem('cookiesAccepted', 'true');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+window.addEventListener('click', function(event) {
+  const modal = document.getElementById('cookie-modal');
+  if (event.target === modal) {
+    closeCookieModal();
+  }
+});
+
+    function openTeamModal() {
+      document.getElementById('team-modal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeTeamModal() {
+      document.getElementById('team-modal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    window.addEventListener('click', function(event) {
+      const modal = document.getElementById('team-modal');
+      if (event.target === modal) {
+        closeTeamModal();
+      }
+    });
+  </script>
+
+  <script>
+    // Плавная прокрутка к якорю
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          // Анимация стрелки (дополнительный эффект)
+          const arrowCircle = this.querySelector('div');
+          if (arrowCircle) {
+            arrowCircle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+              arrowCircle.style.transform = 'scale(1)';
+            }, 200);
+          }
+          // Плавная прокрутка
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+    </html>
+
+
 Copyright (c) GitHub, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
